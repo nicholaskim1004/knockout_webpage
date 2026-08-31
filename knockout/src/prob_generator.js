@@ -48,13 +48,17 @@ function calculateSolution(fractions, operation) {
     const [fraction1, fraction2] = fractions;
 
     if (operation === 'add') {
-        const commonDenominator =
-            fraction1.denominator * fraction2.denominator;
+        const multiple = [fraction2.denominator / fraction1.denominator,
+                          fraction1.denominator / fraction2.denominator]
 
-        const newNumerator =
-            (fraction1.numerator * fraction2.denominator) +
-            (fraction2.numerator * fraction1.denominator);
-
+        if (Number.isInteger(multiple[0]) && Number.isInteger(multiple[1])) {
+            const newNumerator = (fraction1.numerator * multiple[0]) + (fraction2.numerator * multiple[1]);
+            const newDenominator = fraction1.denominator * multiple[0];
+        }
+        else {
+            const newNumerator = (fraction1.numerator * fraction2.denominator) + (fraction2.numerator * fraction1.denominator);
+            const newDenominator = fraction1.denominator * fraction2.denominator;
+        }
         return {
             numerator: newNumerator,
             denominator: commonDenominator
@@ -62,13 +66,17 @@ function calculateSolution(fractions, operation) {
     }
 
     else if (operation === 'subtract') {
-        const commonDenominator =
-            fraction1.denominator * fraction2.denominator;
+        const multiple = [fraction2.denominator / fraction1.denominator,
+                          fraction1.denominator / fraction2.denominator]
 
-        const newNumerator =
-            (fraction1.numerator * fraction2.denominator) -
-            (fraction2.numerator * fraction1.denominator);
-
+        if (Number.isInteger(multiple[0]) && Number.isInteger(multiple[1])) {
+            const newNumerator = (fraction1.numerator * multiple[0]) - (fraction2.numerator * multiple[1]);
+            const newDenominator = fraction1.denominator * multiple[0];
+        }
+        else {
+            const newNumerator = (fraction1.numerator * fraction2.denominator) - (fraction2.numerator * fraction1.denominator);
+            const newDenominator = fraction1.denominator * fraction2.denominator;
+        }
         return {
             numerator: newNumerator,
             denominator: commonDenominator
@@ -102,7 +110,6 @@ function calculateSolution(fractions, operation) {
     }
 }
 
-
 function generateFractionProblem(difficulty) {
     const fractions = generateFractions(difficulty);
 
@@ -114,8 +121,10 @@ function generateFractionProblem(difficulty) {
         const solution = calculateSolution(fractions, 'add');
 
         return {
-            problem: `${fractions[0].numerator}/${fractions[0].denominator} + ${fractions[1].numerator}/${fractions[1].denominator}`,
-            solution: `${solution.numerator}/${solution.denominator}`,
+            frac1: fractions[0],
+            frac2: fractions[1],
+            operation: '+',
+            solution: solution,
             difficulty: difficulty
         };
     }
@@ -124,8 +133,10 @@ function generateFractionProblem(difficulty) {
         const solution = calculateSolution(fractions, 'subtract');
 
         return {
-            problem: `${fractions[0].numerator}/${fractions[0].denominator} - ${fractions[1].numerator}/${fractions[1].denominator}`,
-            solution: `${solution.numerator}/${solution.denominator}`,
+            frac1: fractions[0],
+            frac2: fractions[1],
+            operation: '-',
+            solution: solution,
             difficulty: difficulty
         };
     }
@@ -134,18 +145,23 @@ function generateFractionProblem(difficulty) {
         const solution = calculateSolution(fractions, 'multiply');
 
         return {
-            problem: `${fractions[0].numerator}/${fractions[0].denominator} x ${fractions[1].numerator}/${fractions[1].denominator}`,
-            solution: `${solution.numerator}/${solution.denominator}`,
+            frac1: fractions[0],
+            frac2: fractions[1],
+            operation: 'x',
+            solution: solution,
             difficulty: difficulty
         };
     }
+         
 
     else if (operation === 4) {
         const solution = calculateSolution(fractions, 'divide');
 
         return {
-            problem: `${fractions[0].numerator}/${fractions[0].denominator} ÷ ${fractions[1].numerator}/${fractions[1].denominator}`,
-            solution: `${solution.numerator}/${solution.denominator}`,
+            frac1: fractions[0],
+            frac2: fractions[1],
+            operation: '÷',
+            solution: solution,
             difficulty: difficulty
         };
     }

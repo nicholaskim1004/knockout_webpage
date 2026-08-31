@@ -25,6 +25,44 @@
   margin-top: 24px;
 }
 
+.fraction-problem {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    font-size: 48px;
+}
+
+.fraction {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+}
+
+.numerator,
+.denominator {
+    display: block;
+    padding: 5px 10px;
+}
+
+.fraction-line {
+    width: 100%;
+    height: 3px;
+    background-color: gray;
+}
+
+.operation,
+.equals,
+.question-mark {
+    display: inline-block;
+    font-size: 48px;
+    font-weight: bold;
+    transform: translateY(0px);
+
+}
+
 .hero {
   position: relative;
 

@@ -1,8 +1,5 @@
 import { useState, useRef } from 'react'
 import { generateFractionProblem } from './prob_generator'
-import heroImg from './assets/hero.png'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
 import './App.css'
 
 function App() {
@@ -41,7 +38,7 @@ function App() {
 
   //function to generate new question
   function newQuestion() {
-    setQuestions(generateFractionProblem(difficulty));
+    setQuestions(generateFractionProblem(difficulty.current));
   }
 
   // function to handle difficulty selection
@@ -69,6 +66,15 @@ function App() {
       }
   };
   
+  function Fraction({ numerator, denominator }) {
+    return (
+        <span className="fraction">
+            <span className="numerator">{numerator}</span>
+            <span className="fraction-line"></span>
+            <span className="denominator">{denominator}</span>
+        </span>
+    );
+}
 
 
     return (
@@ -97,7 +103,10 @@ function App() {
                 )}
             </div>
             <div className = "box"> 
-                <p style={{ fontSize: '48px', marginBottom: '5px' }}>{questions.problem}</p>
+                  <Fraction numerator={questions.frac1.numerator} denominator={questions.frac1.denominator} /> 
+                  <span>{questions.operation} </span>
+                  <Fraction numerator={questions.frac2.numerator} denominator={questions.frac2.denominator} />
+                  <span> = ?</span>
                 <p>Difficulty: {questions.difficulty}</p>
             </div>
             <button onClick={handleToggle}> 
@@ -106,10 +115,10 @@ function App() {
             {isvisible && (
               <div>
                 <h2>Answer</h2>
-                <p>{questions.solution}</p>
+                  <Fraction numerator={questions.solution.numerator} denominator={questions.solution.denominator} />
               </div>
             )}
-            <div><button onClick={() => { newQuestion(); handleToggle(); randomAudio();}}>New Question</button></div>
+            <div><button onClick={() => { newQuestion(); setIsVisible(false); randomAudio();}}>New Question</button></div>
         </div>
     );
 }
