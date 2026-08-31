@@ -85,7 +85,7 @@ function App() {
                 <p>{questions.solution}</p>
               </div>
             )}
-            <div><button onClick={newQuestion}>New Question</button></div>
+            <div><button onClick={() => { newQuestion(); handleToggle(); }}>New Question</button></div>
         </div>
     );
 }
