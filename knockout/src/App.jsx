@@ -135,6 +135,7 @@ function App() {
         }
 
         if (question.problem_type === 'percentage_of_whole') {
+            
             return (
                 <div className="percentage-question">
                     <span>{question.percentage}% of {question.wholeNumber}</span>
@@ -181,9 +182,19 @@ function Answer({ question, problemType }) {
     }
 
     if (question.problem_type === 'percentage_of_whole') {
-        return (
+        if (question.solution % 1 === 0) {
+            return (
+                <Fraction
+                numerator={question.fraction[0]}
+                denominator={question.fraction[1]}
+            />
+            )
+        }    
+        else{ 
+            return (
             <p>{question.part}</p>
         );
+        }
     }
 }
 

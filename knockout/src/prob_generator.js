@@ -236,16 +236,29 @@ function generatePercentages(difficulty) {
         }
     }
     if (difficulty === 'hard') {
+        //ensuring percentage is a multiple of 5 to make it simplier
         const percentage = randomInt(1, 100);
         const wholeNumber = randomInt(1, 200);
         const part = wholeNumber * (percentage / 100);
+        const fraction = [wholeNumber*percentage, 100];
 
-        return {
+        if (part % 1 !== 0) {
+            return {
+            percentage: percentage,
+            wholeNumber: wholeNumber,
+            fraction: fraction,
+            problem_type: 'percentage_of_whole',
+            difficulty: difficulty
+        }
+        }
+        else {
+            return {
             percentage: percentage,
             wholeNumber: wholeNumber,
             part: part,
             problem_type: 'percentage_of_whole',
             difficulty: difficulty
+            }
         }
     }
 }
