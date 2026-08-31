@@ -1,5 +1,10 @@
+// random integer excluding zero 
 function randomInt(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
+    let result;
+    do {
+        result = Math.floor(Math.random() * (max - min + 1)) + min;
+    } while (result === 0);
+    return result;
 }
 
 
