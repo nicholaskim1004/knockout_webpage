@@ -17,6 +17,14 @@
   }
 }
 
+.box {
+  border: 2px solid var(--border);
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 24px;
+  margin-top: 24px;
+}
+
 .hero {
   position: relative;
 

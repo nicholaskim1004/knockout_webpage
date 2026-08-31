@@ -78,11 +78,10 @@ function App() {
               src={backgroundmusic}
               loop
           />
-
+          <h1>🏀Fraction Knockout🏀</h1>
           <button onClick={toggleBackgroundMusic}>
               {isplaying ? '🔇 Pause Music' : '🔊 Play Music'}
           </button>
-            <h1>🏀Fraction Knockout🏀</h1>
             <div className="dropdown">
                 <button onClick={() => setIsOpen(!isopen)}>
                     Difficulty: {difficulty}
@@ -97,9 +96,10 @@ function App() {
                     </div>
                 )}
             </div>
-            <h2>Question</h2>
-              <p style={{ fontSize: '24px' }}>{questions.problem}</p>
-              <p>Difficulty: {questions.difficulty}</p>
+            <div className = "box"> 
+                <p style={{ fontSize: '48px', marginBottom: '5px' }}>{questions.problem}</p>
+                <p>Difficulty: {questions.difficulty}</p>
+            </div>
             <button onClick={handleToggle}> 
               {isvisible ? 'Hide Answer' : 'Show Answer'}
             </button>
