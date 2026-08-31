@@ -240,13 +240,15 @@ function generatePercentages(difficulty) {
         const percentage = randomInt(1, 100);
         const wholeNumber = randomInt(1, 200);
         const part = wholeNumber * (percentage / 100);
-        const fraction = [wholeNumber*percentage, 100];
 
         if (part % 1 !== 0) {
             return {
             percentage: percentage,
             wholeNumber: wholeNumber,
-            fraction: fraction,
+            fraction: {
+                numerator: percentage * wholeNumber,
+                denominator: 100
+            },
             problem_type: 'percentage_of_whole',
             difficulty: difficulty
         }
