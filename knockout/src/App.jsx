@@ -33,7 +33,7 @@ function App() {
 
     return (
         <div>
-            <h1>Fraction Knockout</h1>
+            <h1>🏀Fraction Knockout🏀</h1>
             <div className="dropdown">
                 <button onClick={() => setIsOpen(!isopen)}>
                     Difficulty: {difficulty}
