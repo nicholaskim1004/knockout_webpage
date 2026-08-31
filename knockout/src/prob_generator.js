@@ -54,10 +54,20 @@ function calculateSolution(fractions, operation) {
         if (Number.isInteger(multiple[0]) && Number.isInteger(multiple[1])) {
             const newNumerator = (fraction1.numerator * multiple[0]) + (fraction2.numerator * multiple[1]);
             const newDenominator = fraction1.denominator * multiple[0];
+
+            return {
+            numerator: newNumerator,
+            denominator: newDenominator
+            };
         }
         else {
             const newNumerator = (fraction1.numerator * fraction2.denominator) + (fraction2.numerator * fraction1.denominator);
             const newDenominator = fraction1.denominator * fraction2.denominator;
+        
+            return {
+            numerator: newNumerator,
+            denominator: newDenominator
+            };        
         }
         return {
             numerator: newNumerator,
@@ -72,15 +82,21 @@ function calculateSolution(fractions, operation) {
         if (Number.isInteger(multiple[0]) && Number.isInteger(multiple[1])) {
             const newNumerator = (fraction1.numerator * multiple[0]) - (fraction2.numerator * multiple[1]);
             const newDenominator = fraction1.denominator * multiple[0];
+            
+            return {
+            numerator: newNumerator,
+            denominator: newDenominator
+            };
         }
         else {
             const newNumerator = (fraction1.numerator * fraction2.denominator) - (fraction2.numerator * fraction1.denominator);
             const newDenominator = fraction1.denominator * fraction2.denominator;
-        }
-        return {
+
+            return {
             numerator: newNumerator,
-            denominator: commonDenominator
-        };
+            denominator: newDenominator
+            };
+        }
     }
 
     else if (operation === 'multiply') {

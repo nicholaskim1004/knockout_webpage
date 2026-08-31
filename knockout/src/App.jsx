@@ -38,7 +38,7 @@ function App() {
 
   //function to generate new question
   function newQuestion() {
-    setQuestions(generateFractionProblem(difficulty.current));
+    setQuestions(generateFractionProblem(difficulty));
   }
 
   // function to handle difficulty selection
