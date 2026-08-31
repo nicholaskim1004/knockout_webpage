@@ -188,4 +188,66 @@ function generateFractionProblem(difficulty) {
     }
 }
 
-export { generateFractionProblem };
+function generatePercentages(difficulty) {
+    if (difficulty === 'easy') {
+        const percentage = randomInt(1, 100);
+        const decimal = (percentage / 100);
+
+        const prob_type = randomInt(1, 2);
+
+        if (prob_type === 1) {
+            return {
+                percentage: percentage,
+                decimal: decimal,
+                problem_type: 'percentage_to_decimal',
+                difficulty: difficulty
+            };
+        }
+        else {
+            return {
+                percentage: percentage,
+                decimal: decimal,
+                problem_type: 'decimal_to_percentage',
+                difficulty: difficulty
+            };
+        }
+    }
+    if (difficulty === 'medium') {
+        const percentage = randomInt(1, 300);
+        const decimal = (percentage / 100);
+
+        const prob_type = randomInt(1, 2);
+
+        if (prob_type === 1) {
+            return {
+                percentage: percentage,
+                decimal: decimal,
+                problem_type: 'percentage_to_decimal',
+                difficulty: difficulty
+            };
+        }
+        else {
+            return {
+                percentage: percentage,
+                decimal: decimal,
+                problem_type: 'decimal_to_percentage',
+                difficulty: difficulty
+            };
+        }
+    }
+    if (difficulty === 'hard') {
+        const percentage = randomInt(1, 100);
+        const wholeNumber = randomInt(1, 200);
+        const part = wholeNumber * (percentage / 100);
+
+        return {
+            percentage: percentage,
+            wholeNumber: wholeNumber,
+            part: part,
+            problem_type: 'percentage_of_whole',
+            difficulty: difficulty
+        }
+    }
+}
+
+export { generateFractionProblem, generatePercentages };
