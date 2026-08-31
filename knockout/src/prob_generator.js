@@ -150,3 +150,5 @@ function generateFractionProblem(difficulty) {
         };
     }
 }
+
+export { generateFractionProblem };
