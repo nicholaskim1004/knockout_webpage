@@ -13,22 +13,47 @@ function App() {
 
   const difficultyOptions = ['easy', 'medium', 'hard'];
 
+  const audio = [
+    '/public/audio/boomshakalaka.mp3',
+    '/public/audio/bullseye.mp3',
+    '/public/audio/finger-roll.mp3',
+    '/public/audio/heating-up.mp3',
+    '/public/audio/hes-on-fire-nba-jam.mp3',
+    '/public/audio/shoots.mp3',
+  ]
+
+  const backgroundmusic = '/public/audio/knockout/public/audio/Main Theme - NBA Jam (SNES) [OST].mp3'
+
   // variable to show answer or not
   const handleToggle = () => {
     setIsVisible(!isvisible);
   };
 
+  const randomAudio = () => {
+    const randomIndex = Math.floor(Math.random() * audio.length);
+    const selectedAudio = audio[randomIndex];
+    const audioElement = new Audio(selectedAudio);
+    audioElement.play();
+  }
 
+  //function to generate new question
   function newQuestion() {
     setQuestions(generateFractionProblem(difficulty));
   }
 
+  // function to handle difficulty selection
   const handleSelect = (option) => {
     setDifficulty(option);
     setIsOpen(false);
     setQuestions(generateFractionProblem(option));
     setIsVisible(false); 
-  };
+    };
+
+  function BackgroundMusic() {
+    const audioElement = new Audio(backgroundmusic);
+    audioElement.loop = true;
+    audioElement.play();
+  }
 
 
     return (
@@ -51,7 +76,7 @@ function App() {
             <h2>Question</h2>
               <p style={{ fontSize: '24px' }}>{questions.problem}</p>
               <p>Difficulty: {questions.difficulty}</p>
-            <button onClick={handleToggle}> 
+            <button onClick={() => { handleToggle(); randomAudio(); }}> 
               {isvisible ? 'Hide Answer' : 'Show Answer'}
             </button>
             {isvisible && (
