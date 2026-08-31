@@ -6,8 +6,7 @@ import viteLogo from './assets/vite.svg'
 import './App.css'
 
 function App() {
-  const difficulty = useRef('easy');
-  //const [difficulty, setDifficulty] = useState('easy');
+  const [difficulty, setDifficulty] = useState('easy');
   const [questions, setQuestions] = useState(generateFractionProblem('easy'));
   const [isvisible, setIsVisible] = useState(false);
   const [isopen, setIsOpen] = useState(false);
@@ -42,13 +41,13 @@ function App() {
 
   //function to generate new question
   function newQuestion() {
-    setQuestions(generateFractionProblem(difficulty.current));
+    setQuestions(generateFractionProblem(difficulty));
   }
 
   // function to handle difficulty selection
   const handleSelect = (option) => {
     //setDifficulty(option);
-    difficulty.current = option;
+    setDifficulty(option);
     setIsOpen(false);
     setQuestions(generateFractionProblem(option));
     setIsVisible(false); 
@@ -56,23 +55,37 @@ function App() {
 
   // function to toggle background music
   const toggleBackgroundMusic = () => {
-      if (audioRef.current.paused) {
-          audioRef.current.play();
-          setIsPlaying(true);
-      } else {
-          audioRef.current.pause();
-          setIsPlaying(false);
+      if (!audioRef.current) return;
+      try{
+          if (audioRef.current.paused) {
+              audioRef.current.play();
+              setIsPlaying(true);
+          } else {
+              audioRef.current.pause();
+              setIsPlaying(false);
+      }}
+      catch (error) {
+          console.error('Error toggling background music:', error);
       }
   };
+  
 
 
     return (
         <div>
-          <audio ref={audioRef} src={backgroundmusic} loop />
+          <audio
+              ref={audioRef}
+              src={backgroundmusic}
+              loop
+          />
+
+          <button onClick={toggleBackgroundMusic}>
+              {isplaying ? '🔇 Pause Music' : '🔊 Play Music'}
+          </button>
             <h1>🏀Fraction Knockout🏀</h1>
             <div className="dropdown">
                 <button onClick={() => setIsOpen(!isopen)}>
-                    Difficulty: {difficulty.current}
+                    Difficulty: {difficulty}
                 </button>
                 {isopen && (
                     <div className="dropdown-content">
