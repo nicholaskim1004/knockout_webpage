@@ -234,7 +234,9 @@ function Answer({ question, problemType }) {
                     {difficultyOptions.map((option) => (
                         <button
                             key={option}
-                            onClick={() => handleSelect(option)}
+                            onClick={() => {
+                                handleSelect(option);
+                            }}
                         >
                             {option}
                         </button>
