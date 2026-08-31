@@ -64,7 +64,7 @@
 .equals,
 .question-mark {
     display: inline-block;
-    font-size: 48px;
+    font-size: 30px;
     font-weight: bold;
     transform: translateY(0px);
 
@@ -76,7 +76,7 @@
     justify-content: center;
     gap: 25px;
 
-    font-size: 55px;
+    font-size: 32px;
     font-weight: bold;
 }
 

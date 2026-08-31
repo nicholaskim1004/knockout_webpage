@@ -250,7 +250,7 @@ function Answer({ question, problemType }) {
                     <PercentageQuestion question={questions} />
                 )}
 
-                <p>Difficulty: {questions.difficulty}</p>
+                <p style={{ marginTop: '10px' }}>Difficulty: {questions.difficulty}</p>
 
             </div>
             <button onClick={handleToggle}> 
