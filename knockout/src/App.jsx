@@ -182,19 +182,16 @@ function Answer({ question, problemType }) {
     }
 
     if (question.problem_type === 'percentage_of_whole') {
-        if (question.solution % 1 === 0) {
-            return (
-                <Fraction
-                numerator={question.fraction[0]}
-                denominator={question.fraction[1]}
-            />
-            )
-        }    
-        else{ 
-            return (
-            <p>{question.part}</p>
-        );
+        if (question.part !== undefined) {
+            return <p>{question.part}</p>;
         }
+
+        return (
+            <Fraction
+                numerator={question.fraction.numerator}
+                denominator={question.fraction.denominator}
+            />
+        );
     }
 }
 
