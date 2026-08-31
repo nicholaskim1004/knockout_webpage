@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { generateFractionProblem } from './prob_generator'
 import heroImg from './assets/hero.png'
 import reactLogo from './assets/react.svg'
@@ -11,18 +11,21 @@ function App() {
   const [isvisible, setIsVisible] = useState(false);
   const [isopen, setIsOpen] = useState(false);
 
+  const audioRef = useRef(null);
+  const [isplaying, setIsPlaying] = useState(false);
+
   const difficultyOptions = ['easy', 'medium', 'hard'];
 
   const audio = [
-    '/public/audio/boomshakalaka.mp3',
-    '/public/audio/bullseye.mp3',
-    '/public/audio/finger-roll.mp3',
-    '/public/audio/heating-up.mp3',
-    '/public/audio/hes-on-fire-nba-jam.mp3',
-    '/public/audio/shoots.mp3',
+    '/audio/boomshakalaka.mp3',
+    '/audio/bullseye.mp3',
+    '/audio/finger-roll.mp3',
+    '/audio/heating-up.mp3',
+    '/audio/hes-on-fire-nba-jam.mp3',
+    '/audio/shoots.mp3',
   ]
 
-  const backgroundmusic = '/public/audio/knockout/public/audio/Main Theme - NBA Jam (SNES) [OST].mp3'
+  const backgroundmusic = '/audio/knockout/public/audio/Main Theme - NBA Jam (SNES) [OST].mp3'
 
   // variable to show answer or not
   const handleToggle = () => {
@@ -49,15 +52,28 @@ function App() {
     setIsVisible(false); 
     };
 
-  function BackgroundMusic() {
-    const audioElement = new Audio(backgroundmusic);
-    audioElement.loop = true;
-    audioElement.play();
-  }
+  // function to toggle background music
+  const toggleBackgroundMusic = () => {
+  if (!audioRef.current) {
+          audioRef.current = new Audio(backgroundmusic);
+          audioRef.current.loop = true;
+      }
+
+      if (isplaying) {
+          audioRef.current.pause();
+          setIsPlaying(false);
+      } else {
+          audioRef.current.play();
+          setIsPlaying(true);
+      }
+  };
 
 
     return (
         <div>
+          <button onClick={toggleBackgroundMusic}>
+            {isplaying ? 'Pause Background Music' : 'Play Background Music'}
+          </button>
             <h1>🏀Fraction Knockout🏀</h1>
             <div className="dropdown">
                 <button onClick={() => setIsOpen(!isopen)}>
