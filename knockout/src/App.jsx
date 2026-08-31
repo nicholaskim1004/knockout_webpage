@@ -76,7 +76,7 @@ function App() {
             <h2>Question</h2>
               <p style={{ fontSize: '24px' }}>{questions.problem}</p>
               <p>Difficulty: {questions.difficulty}</p>
-            <button onClick={() => { handleToggle(); randomAudio(); }}> 
+            <button onClick={handleToggle}> 
               {isvisible ? 'Hide Answer' : 'Show Answer'}
             </button>
             {isvisible && (
@@ -85,7 +85,7 @@ function App() {
                 <p>{questions.solution}</p>
               </div>
             )}
-            <div><button onClick={() => { newQuestion(); handleToggle(); }}>New Question</button></div>
+            <div><button onClick={() => { newQuestion(); handleToggle(); randomAudio();}}>New Question</button></div>
         </div>
     );
 }
