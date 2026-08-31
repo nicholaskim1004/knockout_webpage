@@ -134,7 +134,7 @@ function generateFractionProblem(difficulty) {
         const solution = calculateSolution(fractions, 'multiply');
 
         return {
-            problem: `${fractions[0].numerator}/${fractions[0].denominator} * ${fractions[1].numerator}/${fractions[1].denominator}`,
+            problem: `${fractions[0].numerator}/${fractions[0].denominator} x ${fractions[1].numerator}/${fractions[1].denominator}`,
             solution: `${solution.numerator}/${solution.denominator}`,
             difficulty: difficulty
         };
@@ -144,7 +144,7 @@ function generateFractionProblem(difficulty) {
         const solution = calculateSolution(fractions, 'divide');
 
         return {
-            problem: `${fractions[0].numerator}/${fractions[0].denominator} / ${fractions[1].numerator}/${fractions[1].denominator}`,
+            problem: `${fractions[0].numerator}/${fractions[0].denominator} ÷ ${fractions[1].numerator}/${fractions[1].denominator}`,
             solution: `${solution.numerator}/${solution.denominator}`,
             difficulty: difficulty
         };

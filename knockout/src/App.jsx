@@ -49,8 +49,8 @@ function App() {
                 )}
             </div>
             <h2>Question</h2>
-            <p style={{ fontSize: '24px' }}>{questions.problem}</p>
-            <p>Difficulty: {questions.difficulty}</p>
+              <p style={{ fontSize: '24px' }}>{questions.problem}</p>
+              <p>Difficulty: {questions.difficulty}</p>
             <button onClick={handleToggle}> 
               {isvisible ? 'Hide Answer' : 'Show Answer'}
             </button>
