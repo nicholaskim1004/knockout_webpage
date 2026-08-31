@@ -53,7 +53,14 @@
     background-color: gray;
 }
 
-.operation,
+.operation {
+    display: inline-block;
+    font-size: 24px;
+    font-weight: bold;
+    transform: translateY(0px);
+
+}
+
 .equals,
 .question-mark {
     display: inline-block;
@@ -61,6 +68,20 @@
     font-weight: bold;
     transform: translateY(0px);
 
+}
+
+.percentage-question {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 25px;
+
+    font-size: 55px;
+    font-weight: bold;
+}
+
+.percentage-question span {
+    display: inline-block;
 }
 
 .hero {

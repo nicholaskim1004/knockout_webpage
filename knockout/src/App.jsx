@@ -1,17 +1,20 @@
 import { useState, useRef } from 'react'
-import { generateFractionProblem } from './prob_generator'
+import { generateFractionProblem, generatePercentages } from './prob_generator'
 import './App.css'
 
 function App() {
   const [difficulty, setDifficulty] = useState('easy');
+  const [problemType, setProblemType] = useState('fractions');
   const [questions, setQuestions] = useState(generateFractionProblem('easy'));
   const [isvisible, setIsVisible] = useState(false);
   const [isopen, setIsOpen] = useState(false);
+  const [isproblemTypeOpen, setIsProblemTypeOpen] = useState(false);
 
   const audioRef = useRef(null);
   const [isplaying, setIsPlaying] = useState(false);
 
   const difficultyOptions = ['easy', 'medium', 'hard'];
+  const problemTypeOptions = ['fractions','percentages']
 
   const audio = [
     '/audio/boomshakalaka.mp3',
@@ -38,16 +41,25 @@ function App() {
 
   //function to generate new question
   function newQuestion() {
-    setQuestions(generateFractionProblem(difficulty));
+    if (problemType === 'fractions') {
+      setQuestions(generateFractionProblem(difficulty));
+    } else if (problemType === 'percentages') {
+      setQuestions(generatePercentages(difficulty));
+    }
+    setIsVisible(false);
   }
 
   // function to handle difficulty selection
-  const handleSelect = (option) => {
-    //setDifficulty(option);
-    setDifficulty(option);
-    setIsOpen(false);
-    setQuestions(generateFractionProblem(option));
-    setIsVisible(false); 
+    const handleSelect = (option) => {
+        setDifficulty(option);
+        setIsDifficultyOpen(false);
+        setIsVisible(false);
+
+        if (problemType === 'fractions') {
+            setQuestions(generateFractionProblem(option));
+        } else if (problemType === 'percentages') {
+            setQuestions(generatePercentages(option));
+        }
     };
 
   // function to toggle background music
@@ -76,6 +88,104 @@ function App() {
     );
 }
 
+    function FractionQuestion({ question }) {
+        return (
+            <div className="fraction-question">
+
+                <Fraction
+                    numerator={question.frac1.numerator}
+                    denominator={question.frac1.denominator}
+                />
+
+                <span className="operation">
+                    {question.operation}
+                </span>
+
+                <Fraction
+                    numerator={question.frac2.numerator}
+                    denominator={question.frac2.denominator}
+                />
+
+                <span>= ?</span>
+
+            </div>
+        );
+    }
+
+    function PercentageQuestion({ question }) {
+
+        if (question.problem_type === 'percentage_to_decimal') {
+            return (
+                <div className="percentage-question">
+                    <span>{question.percentage}%</span>
+                    <span>→</span>
+                    <span>?</span>
+                </div>
+            );
+        }
+
+        if (question.problem_type === 'decimal_to_percentage') {
+            return (
+                <div className="percentage-question">
+                    <span>{question.decimal}</span>
+                    <span>→</span>
+                    <span>?%</span>
+                </div>
+            );
+        }
+
+        if (question.problem_type === 'percentage_of_whole') {
+            return (
+                <div className="percentage-question">
+                    <span>{question.percentage}% of {question.wholeNumber}</span>
+                    <span>=</span>
+                    <span>?</span>
+                </div>
+            );
+        }
+    }
+
+const handleProblemTypeSelect = (option) => {
+    setProblemType(option);
+    setIsProblemTypeOpen(false);
+    setIsVisible(false);
+
+    if (option === 'fractions') {
+        setQuestions(generateFractionProblem(difficulty));
+    } else if (option === 'percentages') {
+        setQuestions(generatePercentages(difficulty));
+    }
+};
+
+function Answer({ question, problemType }) {
+
+    if (problemType === 'fractions') {
+        return (
+            <Fraction
+                numerator={question.solution.numerator}
+                denominator={question.solution.denominator}
+            />
+        );
+    }
+
+    if (question.problem_type === 'percentage_to_decimal') {
+        return (
+            <p>{question.decimal}</p>
+        );
+    }
+
+    if (question.problem_type === 'decimal_to_percentage') {
+        return (
+            <p>{question.percentage}%</p>
+        );
+    }
+
+    if (question.problem_type === 'percentage_of_whole') {
+        return (
+            <p>{question.part}</p>
+        );
+    }
+}
 
     return (
         <div>
@@ -84,30 +194,56 @@ function App() {
               src={backgroundmusic}
               loop
           />
-          <h1>🏀Fraction Knockout🏀</h1>
+          <h1>🏀Knockout🏀</h1>
           <button onClick={toggleBackgroundMusic}>
               {isplaying ? '🔇 Pause Music' : '🔊 Play Music'}
           </button>
-            <div className="dropdown">
-                <button onClick={() => setIsOpen(!isopen)}>
-                    Difficulty: {difficulty}
+          <div className="dropdown">
+                <button onClick={() => setIsProblemTypeOpen(!isproblemTypeOpen)}>
+                    Problem Type: {problemType}
                 </button>
-                {isopen && (
+
+                {isproblemTypeOpen && (
                     <div className="dropdown-content">
-                        {difficultyOptions.map((option) => (
-                            <button key={option} onClick={() => handleSelect(option)}>
+                        {problemTypeOptions.map((option) => (
+                            <button
+                                key={option}
+                                onClick={() => handleProblemTypeSelect(option)}
+                            >
                                 {option}
                             </button>
                         ))}
                     </div>
                 )}
             </div>
-            <div className = "box"> 
-                  <Fraction numerator={questions.frac1.numerator} denominator={questions.frac1.denominator} /> 
-                  <span>{questions.operation} </span>
-                  <Fraction numerator={questions.frac2.numerator} denominator={questions.frac2.denominator} />
-                  <span> = ?</span>
+            <div className="dropdown">
+            <button onClick={() => setIsOpen(!isopen)}>
+                Difficulty: {difficulty}
+            </button>
+
+            {isopen && (
+                <div className="dropdown-content">
+                    {difficultyOptions.map((option) => (
+                        <button
+                            key={option}
+                            onClick={() => handleSelect(option)}
+                        >
+                            {option}
+                        </button>
+                    ))}
+                </div>
+            )}
+            </div>
+            <div className="box">
+
+                {problemType === 'fractions' ? (
+                    <FractionQuestion question={questions} />
+                ) : (
+                    <PercentageQuestion question={questions} />
+                )}
+
                 <p>Difficulty: {questions.difficulty}</p>
+
             </div>
             <button onClick={handleToggle}> 
               {isvisible ? 'Hide Answer' : 'Show Answer'}
@@ -115,7 +251,7 @@ function App() {
             {isvisible && (
               <div>
                 <h2>Answer</h2>
-                  <Fraction numerator={questions.solution.numerator} denominator={questions.solution.denominator} />
+                  <Answer question={questions} problemType={problemType} />
               </div>
             )}
             <div><button onClick={() => { newQuestion(); setIsVisible(false); randomAudio();}}>New Question</button></div>
