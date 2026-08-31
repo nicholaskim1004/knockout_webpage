@@ -6,7 +6,8 @@ import viteLogo from './assets/vite.svg'
 import './App.css'
 
 function App() {
-  const [difficulty, setDifficulty] = useState('easy');
+  const difficulty = useRef('easy');
+  //const [difficulty, setDifficulty] = useState('easy');
   const [questions, setQuestions] = useState(generateFractionProblem('easy'));
   const [isvisible, setIsVisible] = useState(false);
   const [isopen, setIsOpen] = useState(false);
@@ -25,7 +26,7 @@ function App() {
     '/audio/shoots.mp3',
   ]
 
-  const backgroundmusic = '/audio/knockout/public/audio/Main Theme - NBA Jam (SNES) [OST].mp3'
+  const backgroundmusic = '/audio/nba_jam_main_theme.mp3'
 
   // variable to show answer or not
   const handleToggle = () => {
@@ -41,12 +42,13 @@ function App() {
 
   //function to generate new question
   function newQuestion() {
-    setQuestions(generateFractionProblem(difficulty));
+    setQuestions(generateFractionProblem(difficulty.current));
   }
 
   // function to handle difficulty selection
   const handleSelect = (option) => {
-    setDifficulty(option);
+    //setDifficulty(option);
+    difficulty.current = option;
     setIsOpen(false);
     setQuestions(generateFractionProblem(option));
     setIsVisible(false); 
@@ -54,30 +56,23 @@ function App() {
 
   // function to toggle background music
   const toggleBackgroundMusic = () => {
-  if (!audioRef.current) {
-          audioRef.current = new Audio(backgroundmusic);
-          audioRef.current.loop = true;
-      }
-
-      if (isplaying) {
-          audioRef.current.pause();
-          setIsPlaying(false);
-      } else {
+      if (audioRef.current.paused) {
           audioRef.current.play();
           setIsPlaying(true);
+      } else {
+          audioRef.current.pause();
+          setIsPlaying(false);
       }
   };
 
 
     return (
         <div>
-          <button onClick={toggleBackgroundMusic}>
-            {isplaying ? 'Pause Background Music' : 'Play Background Music'}
-          </button>
+          <audio ref={audioRef} src={backgroundmusic} loop />
             <h1>🏀Fraction Knockout🏀</h1>
             <div className="dropdown">
                 <button onClick={() => setIsOpen(!isopen)}>
-                    Difficulty: {difficulty}
+                    Difficulty: {difficulty.current}
                 </button>
                 {isopen && (
                     <div className="dropdown-content">
